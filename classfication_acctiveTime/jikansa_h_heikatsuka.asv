@@ -1,9 +1,8 @@
 close all;
 clear;
 result = cell(100, 8);
-sampling_freq = 10000;  % サンプリング周波数 (Hz)
 index = 1;
-
+border_AD_MMG = 0.15;
 border_SN_MMG = 0.2;
 border_AD_BA = 0.005;
 border_SN_BA = 0.01;
@@ -12,12 +11,10 @@ border_SN_LE = 0.15;
 window_size_MMG = 600;  % Smoothing window size
 window_size_BA = 1000;  % Smoothing window size
 window_size_LE = 300;
-end_rest_time = 2.5;
+End_rest_time = 2.5;
 coefficient_AD_MMG = 2;
 
-endi_RT_AD_MMG = round(end_rest_time * sampling_freq) + 1;
-
-
+end_inde
 
 for m = 1:1
     foldername = sprintf('%d', m);
@@ -42,7 +39,7 @@ for m = 1:1
         end
 
         % 時刻データの変換と経過時間の計算
-
+        sampling_freq = 10000;  % サンプリング周波数 (Hz)
         time = (0:size(data, 1)-1)' / sampling_freq;  % 時間軸 (秒)
         AD_MMG = data(:, 2);
         SN_MMG = data(:, 5);
@@ -64,12 +61,6 @@ for m = 1:1
         SN_BA_smoothed = movmean(SN_BA_envelope, window_size_BA);
         AD_LE_smoothed = movmean(AD_LE_envelope, window_size_LE);
         SN_LE_smoothed = movmean(SN_LE_envelope, window_size_LE);
-
-        RT_data_AD_MMG = AD_MMG_smoothed(1:endi_RT_AD_MMG);
-        mean_RT_AD_MMG = mean (RT_data_AD_MMG);
-        std_RT_AD_MMG = std (RT_data_AD_MMG);
-        border_AD_MMG = mean_RT_AD_MMG + std_RT_AD_MMG * coefficient_AD_MMG ;
-
 
         % 閾値を連続して超える区間を取得
         AD_MMG_over_threshold = AD_MMG_smoothed > border_AD_MMG;
