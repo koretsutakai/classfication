@@ -1,6 +1,6 @@
 close all;
 clear;
-result = cell(100, 10);
+result = cell(100, 9);
 index = 1;
 border_AD_MMG = 0.15;
 border_SN_MMG = 0.2;
@@ -8,10 +8,9 @@ border_AD_BA = 0.005;
 border_SN_BA = 0.01;
 border_AD_LE = 0.18;
 border_SN_LE = 0.15;
-window_size_MMG = 600;  % 平滑化の窓サイズ
-window_size_BA = 1000;  % 平滑化の窓サイズ
+window_size_MMG = 600;  % Smoothing window size
+window_size_BA = 1000;  % Smoothing window size
 window_size_LE = 300;
-
 
 
 for m = 1:17
