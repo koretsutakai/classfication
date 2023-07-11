@@ -1,6 +1,6 @@
 close all;
 clear;
-result = cell(100, 9);
+result = cell(100, 10);
 index = 1;
 border_AD_MMG = 0.15;
 border_SN_MMG = 0.2;
