@@ -7,12 +7,12 @@ index = 1;
 window_size_MMG = 600;  % Smoothing window size
 window_size_BA = 1000;  % Smoothing window size
 window_size_LE = 300;
-coefficient_AD_MMG = 2;
-coefficient_SN_MMG = 2;
-coefficient_AD_BA = 2;
-coefficient_SN_BA = 2;
-coefficient_AD_LE = 2;
-coefficient_SN_LE = 2;
+coefficient_AD_MMG = 0.4;
+coefficient_SN_MMG = 0.4;
+coefficient_AD_BA = 0.4;
+coefficient_SN_BA = 0.4;
+coefficient_AD_LE = 0.4;
+coefficient_SN_LE = 0.4;
 
 for m = 1:17
     foldername = sprintf('%d', m);
@@ -70,35 +70,13 @@ for m = 1:17
         AD_LE_smoothed = movmean(AD_LE_envelope, window_size_LE);
         SN_LE_smoothed = movmean(SN_LE_envelope, window_size_LE);
 
-        RT_data_AD_MMG = AD_MMG_smoothed(1:endi_RT_AD_MMG);
-        mean_RT_AD_MMG = mean (RT_data_AD_MMG);
-        std_RT_AD_MMG = std (RT_data_AD_MMG);
-        border_AD_MMG = mean_RT_AD_MMG + std_RT_AD_MMG * coefficient_AD_MMG ;
+        border_AD_MMG = coefficient_AD_MMG * max(AD_MMG_smoothed);
+        border_SN_MMG = coefficient_SN_MMG * max(SN_MMG_smoothed);
+        border_AD_BA = coefficient_AD_BA * max(AD_BA_smoothed);
+        border_SN_BA = coefficient_SN_BA * max(SN_BA_smoothed);
+        border_AD_LE = coefficient_AD_LE * max(AD_LE_smoothed);
+        border_SN_LE = coefficient_SN_LE * max(SN_LE_smoothed);
 
-        RT_data_SN_MMG = SN_MMG_smoothed(1:endi_RT_SN_MMG);
-        mean_RT_SN_MMG = mean (RT_data_SN_MMG);
-        std_RT_SN_MMG = std (RT_data_SN_MMG);
-        border_SN_MMG = mean_RT_SN_MMG + std_RT_SN_MMG * coefficient_SN_MMG ;
-
-        RT_data_AD_BA = AD_BA_smoothed(1:endi_RT_AD_BA);
-        mean_RT_AD_BA = mean (RT_data_AD_BA);
-        std_RT_AD_BA = std (RT_data_AD_BA);
-        border_AD_BA = mean_RT_AD_BA + std_RT_AD_BA * coefficient_AD_BA ;
-
-        RT_data_SN_BA = SN_BA_smoothed(1:endi_RT_SN_BA);
-        mean_RT_SN_BA = mean (RT_data_SN_BA);
-        std_RT_SN_BA = std (RT_data_SN_BA);
-        border_SN_BA = mean_RT_SN_BA + std_RT_SN_BA * coefficient_SN_BA ;
-
-        RT_data_AD_LE = AD_LE_smoothed(1:endi_RT_AD_LE);
-        mean_RT_AD_LE = mean (RT_data_AD_LE);
-        std_RT_AD_LE = std (RT_data_AD_LE);
-        border_AD_LE = mean_RT_AD_LE + std_RT_AD_LE * coefficient_AD_LE ;
-
-        RT_data_SN_LE = SN_LE_smoothed(1:endi_RT_SN_LE);
-        mean_RT_SN_LE = mean (RT_data_SN_LE);
-        std_RT_SN_LE = std (RT_data_SN_LE);
-        border_SN_LE = mean_RT_SN_LE + std_RT_SN_LE * coefficient_SN_LE ;
 
 
         % 閾値を連続して超える区間を取得
@@ -284,4 +262,4 @@ end
 
 header = {'folder', 'File', 'max_acctive_AD_MMG', 'max_acctive_SN_MMG' 'max_acctive_AD_BA' 'max_acctive_SN_BA' 'max_acctive_AD_LE' 'max_acctive_SN_LE'};
 headerResult = [header; result];
-writecell(headerResult, 'AcctiveTime.csv');
+writecell(headerResult, 'AcctiveTime_max.csv');
