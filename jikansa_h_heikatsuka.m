@@ -14,9 +14,9 @@ coefficient_SN_BA = 0.4;
 coefficient_AD_LE = 0.4;
 coefficient_SN_LE = 0.4;
 
-for m = 1:17
+for m = 1:5
     foldername = sprintf('%d', m);
-    for i = 1:5
+    for i = 1:1
         filename = fullfile(foldername, sprintf('%d.xlsx', i));
 
         if m == 4
